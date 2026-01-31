@@ -1,0 +1,51 @@
+class Solution {
+public:
+    int compress(vector<char>& chars) {
+        vector<char> res;
+        int c = 1;
+        for (int i = 1; i < chars.size(); i++) {
+            if (chars[i] == chars[i - 1]) {
+                c++;
+            } else {
+                res.push_back(chars[i - 1]);
+                if (c > 1) {
+                    if (c < 10) {
+                        res.push_back(c + '0');
+                    } else {
+                    
+                        string num = "";
+                        while (c > 0) {
+                           num.push_back((c % 10 )+'0');
+                            c /= 10;
+                        }
+                        reverse(num.begin(), num.end());
+                        for (auto x : num) {
+                            res.push_back(x);
+                        }
+                    }
+                }
+                c = 1;
+            }
+        }
+        res.push_back(chars[chars.size() - 1]);
+        if (c > 1) {
+            if (c < 10) {
+                res.push_back(c + '0');
+            } else {
+                string num = "";
+                while (c > 0) {
+                    num.push_back((c % 10 )+'0');
+                    c /= 10;
+                }
+                reverse(num.begin(), num.end());
+                for (auto x : num) {
+                    res.push_back(x);
+                }
+            }
+        }
+
+        chars.clear();
+        chars = res;
+        return res.size();
+    }
+};
